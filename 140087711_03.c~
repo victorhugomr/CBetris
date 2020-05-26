@@ -1,0 +1,138 @@
+/*Universidade de Brasilia
+Instituto de Ciencias Exatas
+Departamento de Ciencia da Computacao
+Computacao Basica – 1/2015
+Aluno(a): Victor Hugo Magalhaes Rodrigues
+Matricula: 140087711
+Turma: C
+Versão do compilador: GCC
+Descricao: CBetris*/
+
+#ifdef _WIN64
+    #define CLEAR "cls"
+#else
+    #define CLEAR "clear"
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void LeSequencia(FILE *fp, char MAT[100][20]){
+int nseq;
+
+    nseq=0;
+    while(fscanf(fp,"%s",MAT[nseq]) > 0){
+        printf("%s ",MAT[nseq]);
+        nseq++;
+    }
+}
+
+void InsereSequencia(char JOGO[15][20], char MAT[100][20], int c){
+char a,b;
+
+    strcpy(JOGO[0],MAT[c]);
+    c=c+1;
+    a=JOGO[0][0];
+    b=MAT[c][0];
+    if(a==b){
+        strcpy(JOGO[1],MAT[c]);
+        c=c+1;
+    }
+}
+
+void MostraTela(){
+int i;
+
+    system(CLEAR);
+    printf("  +-------CBetris------+\n\n\n");
+    printf("  +--------------------+\n");
+    for(i=0;i<=5;i++){
+        printf("  |                    |\n");
+    }
+    printf("=>+                    +<=\n");
+    for(i=0;i<=7;i++){
+        printf("  |                    |\n");
+    }
+    printf("  +--------------------+\n");
+    printf("Tecle <enter> para iniciar o jogo");
+    getchar();
+}
+
+void Tela(char a[15][20], int *b){
+int i,j;
+
+    system(CLEAR);
+    printf("  +-------CBetris------+\n\n\n");
+    printf("  +--------------------+     PONTUACAO: %d\n", *b);
+    for(i=0;i<15; i++){
+        if(i==6){
+            printf("=>+");
+        }
+        else{
+            printf("  |");
+        }
+        for(j=0;j<20;j++){
+            printf("%c",a[i][j]);
+        }
+        if(i==6){
+            printf("+<=\n");
+        }
+        else{
+            printf("|\n");
+        }
+    }
+    printf("  +--------------------+\n");
+    printf("R-rotar D-direita E-esquerda C-cair\n");
+    printf("ACAO: ");
+}
+
+void GameOver(){
+}
+
+void Verifica(){
+}
+
+void Cai(){
+}
+
+void Direita(){
+}
+
+void Esquerda(){
+}
+
+void Rotaciona(){
+}
+
+void LeAcao(){
+}
+
+int main(){
+int l,c, flag,cont_l, tot_pontos;
+char JOGO[15][20], MAT[100][20];
+
+    FILE *fp;
+    fp = fopen("sequencias.txt","r");
+
+    for(l=0;l<15;l++){
+        for(c=0;c<20;c++){
+            JOGO[l][c]=' ';
+        }
+    }
+    LeSequencia(fp,MAT);
+    fclose(fp);
+
+    MostraTela();
+    cont_l=0;
+    flag=1;
+    while(flag){
+        InsereSequencia(JOGO,MAT,cont_l);
+        Tela(JOGO,&tot_pontos);
+	getchar();
+    }
+
+return 0;
+}
+
+
